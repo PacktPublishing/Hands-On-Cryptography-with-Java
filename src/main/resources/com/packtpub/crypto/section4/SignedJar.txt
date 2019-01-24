@@ -1,0 +1,18 @@
+After building the code, run this from the base directory:
+keytool -genkeypair -alias mine -keyalg RSA -keysize 2048 -validity 730 -keystore target/javakeystore_keepsecret.jks
+(for help go back to the Keytool in Section 3)
+
+Check the original:
+jarsigner -verify target/packt-crypto-1.0-SNAPSHOT.jar
+This will say the jar is unsigned.
+
+Sign the jar:
+jarsigner -verbose -keystore target/javakeystore_keepsecret.jks -signedjar target/packt-crypto-1.0-SNAPSHOT.jar target/packt-crypto-1.0-SNAPSHOT.jar mine
+
+Now validate
+jarsigner -verify target/packt-crypto-1.0-SNAPSHOT.jar
+
+You can see the signer details in:
+META-INF/MANIFEST.MF
+META-INF/MINE.RSA
+Don't just look at certificate words, look at its hash.
